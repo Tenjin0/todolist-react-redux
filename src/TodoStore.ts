@@ -10,13 +10,15 @@ export class TodoStore {
         this.i++
     }
 
+
     addTodo(title: string) : void {
         // @ts-ignore
         this.setState({
+            newTodo: "",
             // @ts-ignore
-            newTodo: this.state.newTodo,
-            // @ts-ignore
-            todos : [{id : 0, title: title, completed: false}, ... this.todos]
+            store : [{id : 0, title: title, completed: false}, ... this.store]
         })
+        // @ts-ignore
+        console.log(this.state)
     }
 }

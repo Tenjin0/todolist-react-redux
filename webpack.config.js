@@ -8,12 +8,12 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const dist = path.resolve(__dirname, 'dist');
-const env = process.env.NODE_ENV || 'development'
+const NODE_ENV = process.env.NODE_ENV || 'development'
 const _PORT = process.env.REACT_PORT || 3030
 
 const GLOBALS = {
     'process.env': {
-      'production': JSON.stringify(env === 'production')
+      'NODE_ENV': JSON.stringify(NODE_ENV)
     }
     // 'API_URL' : JSON.stringify(API_URL),
     // 'FULL_API_URL' : JSON.stringify(FULL_API_URL),
@@ -22,10 +22,10 @@ const GLOBALS = {
 
 var config = {
     entry: [
-        './src/index.tsx'
+        './src/main.tsx'
     ],
-    devtool: env ? 'inline-source-map' : 'inline-source-map',
-    mode: env,
+    devtool: NODE_ENV ? 'inline-source-map' : 'inline-source-map',
+    mode: NODE_ENV,
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new CleanWebpackPlugin([dist]),
@@ -48,11 +48,18 @@ var config = {
         port: _PORT
       },
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.(ts|tsx)$/,
-                loader: "ts-loader"
+                loader: "tslint-loader",
+                exclude: /node_modules/,
+                enforce: "pre"
             },
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+            {
+                test: /\.(ts|tsx)$/,
+                loader: "ts-loader",
+                exclude: /node_modules/
+            },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
@@ -100,7 +107,7 @@ var config = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.json', '.ts', '.tsx']
+        extensions: ['.js','css', '.jsx', '.json', '.ts', '.tsx']
     },
     output: {
         filename: 'main.js',
@@ -108,7 +115,7 @@ var config = {
     }
 }
 
-if (env !== "production") {
+if (NODE_ENV !== "production") {
     if (process.env.FROM_NODE) {
         config.entry.push('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000')
     }

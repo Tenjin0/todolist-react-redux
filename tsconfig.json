@@ -1,13 +1,21 @@
 {
+    "files" : [
+        "./src/main.tsx"
+    ],
     "compilerOptions": {
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "commonjs",
+        "module": "es2015",
         "target": "es5",
-        "jsx": "react"
+        "jsx": "react",
+        "strict": true,
+        "allowJs": true
     },
     "include": [
         "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

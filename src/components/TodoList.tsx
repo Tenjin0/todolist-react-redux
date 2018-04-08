@@ -32,7 +32,7 @@ AppState > {
             todos: [],
             newTodo: ""
         };
-        // window.store = this.;
+        window.store = this.state;
     }
 
     updateNewTodo = (e : React.FormEvent < HTMLInputElement >) : void => {
@@ -44,7 +44,7 @@ AppState > {
             .state
             .todos
             .push({id: 0, title: title, completed: false})
-        console.log(this.state)
+        this.setState({newTodo: '', todos: this.state.todos})
     }
 
     render() {

@@ -38,9 +38,6 @@ var config = {
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
-        }),
-        new OpenBrowserPlugin({
-            url: `http://localhost:${_PORT}`
         })
     ],
     devServer: {
@@ -118,6 +115,9 @@ var config = {
 if (NODE_ENV !== "production") {
     if (process.env.FROM_NODE) {
         config.entry.push('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000')
+        config.plugins.push(new OpenBrowserPlugin({
+            url: `http://localhost:${_PORT}`
+        }))
     }
     config.entry.push('react-hot-loader/patch')
     config.plugins.push(new webpack.HotModuleReplacementPlugin())

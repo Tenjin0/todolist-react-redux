@@ -25,7 +25,7 @@ export default class Add extends React.Component < AddProps, AddState > {
     render() {
         return <div>
             <form  onSubmit={this.onSubmit}>
-            <input type="text" onInput={this.props.updateNewTodo} defaultValue={this.props.newTodo} autoFocus/>
+            <input type="text" onChange={this.props.updateNewTodo} value={this.props.newTodo} autoFocus/>
             <button>Add</button>
             </form>
         </div>

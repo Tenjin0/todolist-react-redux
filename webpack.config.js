@@ -118,10 +118,10 @@ if (NODE_ENV !== "production") {
         config.plugins.push(new OpenBrowserPlugin({
             url: `http://localhost:${_PORT}`
         }))
+        config.plugins.push(new webpack.HotModuleReplacementPlugin())
+        config.plugins.push(new webpack.NoEmitOnErrorsPlugin())
     }
     config.entry.push('react-hot-loader/patch')
-    config.plugins.push(new webpack.HotModuleReplacementPlugin())
-    config.plugins.push(new webpack.NoEmitOnErrorsPlugin())
 }
 
 module.exports = config;

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { render } from 'react-dom'
 import TodoList from './components/TodoList'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css'
 
 render(
     <TodoList />,

@@ -28,7 +28,7 @@ export default class Add extends React.Component<AddProps, AddState> {
     }
 
     handleBlur = (event: React.FocusEvent<HTMLInputElement>) : void => {
-        this.setState({buttonIsVisible: false})
+        this.setState({buttonIsVisible: true})
     }
 
     render() {

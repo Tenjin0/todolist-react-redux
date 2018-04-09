@@ -22,14 +22,15 @@ declare var window : Window;
 export default class TodoList extends React.Component < AppProps,
 AppState > {
 
-    private store : TodoStore = new TodoStore()
+    private store : TodoStore
     // private addStore : (title : string) => void = this .store .addTodo
     // .bind(this)
 
     constructor(props : AppProps) {
         super(props)
+        this.store = new TodoStore()
         this.state = {
-            todos: [],
+            todos: this.store.todos,
             newTodo: ""
         };
         window.store = this.state;
@@ -40,11 +41,7 @@ AppState > {
     }
 
     addTodo = (title : string) : void => {
-        this
-            .state
-            .todos
-            .push({id: 0, title: title, completed: false})
-        this.setState({newTodo: '', todos: this.state.todos})
+        this.store.addTodo.bind(this)(title)
     }
 
     render() {

@@ -12,12 +12,9 @@ export class TodoStore {
 
 
     addTodo(title: string) : void {
+
         // @ts-ignore
-        this.setState({
-            newTodo: "",
-            // @ts-ignore
-            store : [{id : 0, title: title, completed: false}, ... this.store]
-        })
+        this.setState({newTodo: '', todos: [{id: 0, title: title, completed: false}, ...this.state.todos]})
         // @ts-ignore
         console.log(this.state)
     }

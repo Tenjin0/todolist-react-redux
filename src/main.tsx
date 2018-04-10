@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import TodoList from './components/Todo/index'
 
 // import 'bootstrap/dist/css/bootstrap.min.css'
-import 'font-awesome/css/font-awesome.min.css';
+// import 'font-awesome/css/font-awesome.min.css';
 
 render(
     <TodoList />,

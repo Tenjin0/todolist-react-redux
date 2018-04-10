@@ -28,7 +28,6 @@ var config = {
     mode: NODE_ENV,
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new CleanWebpackPlugin([dist]),
         new webpack.ProvidePlugin({}),
         new webpack.DefinePlugin(GLOBALS),
         new HtmlWebPackPlugin({
@@ -38,7 +37,8 @@ var config = {
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
-        })
+        }),
+        new CleanWebpackPlugin([dist])
     ],
     devServer: {
         inline: true,
@@ -65,11 +65,8 @@ var config = {
                 }
             },
             {
-                test: /\.(ttf|eot|woff|woff2)$/,
-                loader: "file-loader",
-                options: {
-                    name: "fonts/[name].[ext]",
-                },
+                test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader',
             },
             {
                 test: /\.svg$/,

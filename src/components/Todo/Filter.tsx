@@ -21,6 +21,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     render() {
         const filterkeys = Object.keys(eFilter).filter(option => {
+            // @ts-ignore
             return Number.isNaN(parseInt(option))
         })
         return <ul className="inline">

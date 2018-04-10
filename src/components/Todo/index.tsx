@@ -58,12 +58,14 @@ AppState > {
             .bind(this)(title)
     }
 
-    toggleTodo = (pos : number) : void => {
+    toggleTodo = (id : number) : void => {
+
+        // As setState in asynchonous perhaps it is not a good idea to save a property state in a variable.
         const todos = this
             .state
             .todos
-            .map((todo, index) => {
-                return index === pos
+            .map((todo) => {
+                return  todo.id === id
                     ? {
                         ...todo,
                         completed: !todo.completed

@@ -1,34 +1,28 @@
 import * as React from "react";
 import ListTodo from './List'
 import AddTodo from './Add'
-import {TodoStore} from '../TodoStore'
-import {iTodo} from '../interfaces'
+import {TodoStore} from '../../TodoStore'
+import {iTodo} from '../../interfaces'
+import {eFilter} from '../../enum'
+import FilterTodo from './Filter'
+
+import './todolist.scss'
+
+const  Filters = {
+    [eFilter.all] : (todo: iTodo) => true,
+    [eFilter.active] : (todo: iTodo) => !todo.completed,
+    [eFilter.completed]: (todo:iTodo) => todo.completed
+}
 
 export interface AppProps {
     // compiler?: string, framework?: string;
 }
 
-type FilterOptions = 'all' | 'completed' | 'active'
-
-enum Filter {
-    all,
-    active,
-    completed
-}
-
-const  Filters = {
-    [Filter.all] : (todo: iTodo) => true,
-    [Filter.active] : (todo: iTodo) => !todo.completed,
-    [Filter.completed]: (todo:iTodo) => todo.completed
-}
 export interface AppState {
     todos : iTodo[],
     newTodo : string,
-    filter: Filter
+    currentFilter: eFilter
 }
-
-
-import './todolist.scss'
 
 interface Window {
     store : any;
@@ -48,7 +42,7 @@ AppState > {
         this.state = {
             todos: this.store.todos,
             newTodo: "",
-            filter: Filter.all
+            currentFilter: eFilter.all
         }
         window.store = this.state;
     }
@@ -79,14 +73,21 @@ AppState > {
         this.setState({ ...this.state, todos: todos})
     }
 
+    filterCallback = (filterOption: eFilter) : void => {
+        this.setState((previousState) => {
+            return {...previousState, currentFilter: filterOption}
+        })
+        this.setState({...this.state, currentFilter: filterOption})
+    }
     render() {
-        const todosFiltered = this.state.todos.filter(Filters[this.state.filter])
+        const todosFiltered = this.state.todos.filter(Filters[this.state.currentFilter])
         return <div>
             <AddTodo
                 newTodo={this.state.newTodo}
                 updateNewTodo={this.updateNewTodo}
                 addCallback={this.addTodo}/>
             <ListTodo todos={todosFiltered} toggleTodo={this.toggleTodo}/>
+            <FilterTodo filterCallback={this.filterCallback}/>
         </div>
     }
 }

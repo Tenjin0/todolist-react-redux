@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {iTodo} from '../interfaces'
+import {iTodo} from '../../interfaces'
 
 export interface ListProps { todos: iTodo[], toggleTodo: (pos : number) => void}
 

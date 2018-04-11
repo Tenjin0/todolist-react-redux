@@ -1,18 +1,18 @@
 import * as React from "react";
 import ListTodo from './List'
 import AddTodo from './Add'
-import {TodoStore} from '../../TodoStore'
-import {iTodo} from '../../interfaces'
-import {eFilter} from '../../enum'
+import { TodoStore } from '../../TodoStore'
+import { iTodo } from '../../interfaces'
+import { eFilter } from '../../enum'
 import FilterTodo from './Filter'
 import HeaderTodo from './Header'
 
 import './todolist.scss'
 
 const Filters = {
-    [eFilter.all]: (todo : iTodo) => true,
-    [eFilter.active]: (todo : iTodo) => !todo.completed,
-    [eFilter.completed]: (todo : iTodo) => todo.completed
+    [eFilter.all]: (todo: iTodo) => true,
+    [eFilter.active]: (todo: iTodo) => !todo.completed,
+    [eFilter.completed]: (todo: iTodo) => todo.completed
 }
 
 export interface AppProps {
@@ -20,100 +20,44 @@ export interface AppProps {
 }
 
 export interface AppState {
-    todos : iTodo[],
-    newTodo : string,
-    currentFilter : eFilter
+    todos: iTodo[],
+    newTodo: string,
+    currentFilter: eFilter
 }
 
 interface Window {
-    store : any;
+    store: any;
 }
-declare var window : Window;
+declare var window: Window;
 
-export default class TodoList extends React.Component < AppProps,
-AppState > {
+export default class TodoList extends React.Component<AppProps,
+    AppState> {
 
-    private store : TodoStore
+    private store: TodoStore
     // private addStore : (title : string) => void = this .store .addTodo
     // .bind(this)
 
-    constructor(props : AppProps) {
+    constructor(props: AppProps) {
         super(props)
         this.store = new TodoStore()
         this.state = {
             todos: this.store.todos,
-            newTodo: "",
+            newTodo: this.store.newTodo,
             currentFilter: eFilter.all
         }
-        window.store = this.state;
-    }
 
-    updateNewTodo = (e : React.FormEvent < HTMLInputElement >) : void => {
-        this.setState({newTodo: e.currentTarget.value, todos: this.state.todos})
-    }
+        window.store = this.state
 
-    addTodo = (title : string) : void => {
-        this
-            .store
-            .addTodo
-            .bind(this)(title)
-    }
-
-    deleteTodo = (id : number) : void => {
-        const newTodos = this
-            .state
-            .todos
-            .filter(todo => todo.id != id)
-        this.setState({
-            ...this.state,
-            todos: newTodos
+        this.store.subscribe(() => {
+            this.setState({ ...this.state, todos: this.store.todos, newTodo: this.store.newTodo })
         })
     }
 
-    toggleTodo = (id : number) : void => {
-
-        // As setState in asynchonous perhaps it is not a good idea to save a property
-        // state in a variable.
-        const todos = this
-            .state
-            .todos
-            .map((todo) => {
-                return todo.id === id
-                    ? {
-                        ...todo,
-                        completed: !todo.completed
-                    }
-                    : todo
-            })
-        this.setState({
-            ...this.state,
-            todos: todos
-        })
+    updateNewTodo = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.store.updateNewTodo(e.currentTarget.value as string)
     }
 
-    clearAll = () => {
-        this.setState({...this.state, todos:[]})
-    }
-
-    completeAll = () => {
-        const newTodo = this.state.todos.map(todo => {return {...todo, completed: true}});
-        this.setState({...this.state, todos: newTodo})
-    }
-
-    clearCompleted = () => {
-        const newTodo = this.state.todos.filter(todo => {
-            return !todo.completed
-        })
-        this.setState({...this.state, todos: newTodo})
-    }
-    
-    filterCallback = (filterOption : eFilter) : void => {
-        this.setState((previousState) => {
-            return {
-                ...previousState,
-                currentFilter: filterOption
-            }
-        })
+    filterCallback = (filterOption: eFilter): void => {
         this.setState({
             ...this.state,
             currentFilter: filterOption
@@ -126,16 +70,16 @@ AppState > {
             .todos
             .filter(Filters[this.state.currentFilter])
         return <div>
-            <HeaderTodo clearAll={this.clearAll} completeAll={this.completeAll} clearCompleted={this.clearCompleted}/>
+            <HeaderTodo clearAll={this.store.clearAll} completeAll={this.store.completeAll} clearCompleted={this.store.clearCompleted} />
             <AddTodo
                 newTodo={this.state.newTodo}
                 updateNewTodo={this.updateNewTodo}
-                addCallback={this.addTodo}/>
+                addCallback={this.store.addTodo} />
             <ListTodo
                 todos={todosFiltered}
-                toggleTodo={this.toggleTodo}
-                deleteTodo={this.deleteTodo}/>
-            <FilterTodo filterCallback={this.filterCallback}/>
+                toggleTodo={this.store.toggleTodo}
+                deleteTodo={this.store.deleteTodo} />
+            <FilterTodo filterCallback={this.filterCallback} />
         </div>
     }
 }

@@ -2,20 +2,73 @@ import { iTodo } from "./interfaces"
 
 export class TodoStore {
 
-    public todos : iTodo[] = []
-    private static i : number = 0
+    public newTodo: string = ""
+    public todos: iTodo[] = []
+    private static i: number = 0
+    private cb: Function[] = []
 
-
-    static increment() {
-        this.i++
+    static increment(): number {
+        return this.i++
     }
 
+    inform() {
+        this.cb.forEach(cb => {
+            cb()
+        })
+    }
 
-    addTodo(title: string) : void {
+    addTodo(title: string): void {
+        this.newTodo = ""
+        this.todos = [{ id: TodoStore.increment(), title: title, completed: false }, ...this.todos]
+        // @ts-ignore
+        // this.setState({newTodo: '', todos: [{id: increment(), title: title, completed: false}, ...this.state.todos]})
+        this.inform()
+    }
 
-        // @ts-ignore
-        this.setState({newTodo: '', todos: [{id: 0, title: title, completed: false}, ...this.state.todos]})
-        // @ts-ignore
-        console.log(this.state)
+    deleteTodo(id: number): void {
+        this.todos = this
+            .todos
+            .filter(todo => todo.id != id)
+    }
+
+    updateNewTodo(newTodo: string): void {
+        this.newTodo = newTodo
+        this.inform()
+    }
+
+    toggleTodo = (id: number): void => {
+        // As setState in asynchonous perhaps it is not a good idea to save a property
+        // state in a variable.
+        this.todos = this.todos.map((todo) => {
+            return todo.id === id
+                ? {
+                    ...todo,
+                    completed: !todo.completed
+                }
+                : todo
+        })
+        this.inform()
+    }
+
+    clearAll = () => {
+        this.todos = []
+        this.inform()
+    }
+
+    completeAll = () => {
+        this.todos =  this.todos.map(todo => { return { ...todo, completed: true } });
+        this.inform()
+    }
+
+    clearCompleted = () => {
+        this.todos =  this.todos.filter(todo => {
+            return !todo.completed
+        })
+        this.inform()
+
+    }
+
+    subscribe(cb: Function) {
+        this.cb.push(cb)
     }
 }

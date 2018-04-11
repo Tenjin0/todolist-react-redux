@@ -29,15 +29,17 @@ export default class Item extends React.Component<ItemProps, ItemState> {
     }
 
     render() {
-        return <li 
-            key={'item-'}
-            onClick={this.handleClickToggle}
-            className={this.props.todo.completed ?'completed': ''}
-            data-id={this.props.todo.id}>
-                    {this.props.todo.title}
+        return(
+            <li 
+                onClick={this.handleClickToggle}
+                className={this.props.todo.completed ?'completed': ''}
+                data-id={this.props.todo.id}
+            >
+                {this.props.todo.title}
                 <span onClick={this.handleClickDelete}>
                     <i className="material-icons">close</i>
                 </span>
             </li>
+        )
     }
 }

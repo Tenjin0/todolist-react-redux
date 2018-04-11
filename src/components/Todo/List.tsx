@@ -24,6 +24,7 @@ export default class List extends React.Component < ListProps, {} > {
                         .map(todo => <ItemTodo
                             toggleTodo={this.props.toggleTodo}
                             deleteTodo={this.props.deleteTodo}
+                            key={'item-' + todo.id}
                             todo={todo}/>)}
                 </ul>
             </div>

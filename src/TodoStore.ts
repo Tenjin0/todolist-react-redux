@@ -2,6 +2,12 @@ import { iTodo } from "./interfaces"
 
 export class TodoStore {
 
+    constructor() {
+        this.addTodo = this.addTodo.bind(this)
+        this.deleteTodo = this.deleteTodo.bind(this)
+        this.toggleTodo = this.toggleTodo.bind(this)
+    }
+
     public newTodo: string = ""
     public todos: iTodo[] = []
     private static i: number = 0
@@ -29,6 +35,7 @@ export class TodoStore {
         this.todos = this
             .todos
             .filter(todo => todo.id != id)
+        this.inform()
     }
 
     updateNewTodo(newTodo: string): void {

@@ -6,6 +6,8 @@ https://www.npmjs.com/package/todomvc-app-css
 
 TODOS
 
-clearCompleted
-Delete
-AllComplete
+Fix id
+Refactor actions in todoStore
+Css
+Api call
+Redux

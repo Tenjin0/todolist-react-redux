@@ -1,6 +1,6 @@
-import { iTodo } from "./interfaces"
+import { iTodo } from "../interfaces"
 
-export class TodoStore {
+class TodoStore {
 
     constructor() {
         this.addTodo = this.addTodo.bind(this)
@@ -79,3 +79,6 @@ export class TodoStore {
         this.cb.push(cb)
     }
 }
+
+const todoStore = new TodoStore()
+export {todoStore, TodoStore}

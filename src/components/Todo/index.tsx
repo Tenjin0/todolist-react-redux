@@ -1,7 +1,7 @@
 import * as React from "react";
 import ListTodo from './List'
 import AddTodo from './Add'
-import { TodoStore } from '../../TodoStore'
+import { todoStore, TodoStore } from '../../stores/TodoStore'
 import { iTodo } from '../../interfaces'
 import { eFilter } from '../../enum'
 import FilterTodo from './Filter'
@@ -39,7 +39,7 @@ export default class TodoList extends React.Component<AppProps,
 
     constructor(props: AppProps) {
         super(props)
-        this.store = new TodoStore()
+        this.store = todoStore
         this.state = {
             todos: this.store.todos,
             newTodo: this.store.newTodo,

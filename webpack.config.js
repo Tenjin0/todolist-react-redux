@@ -8,15 +8,19 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const dist = path.resolve(__dirname, 'dist');
+
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const _PORT = process.env.REACT_PORT || 3030
+const _API_HOST = process.env.API_HOST || 'localhost';
+const SERVER_URL = `http://${_API_HOST}:${_PORT}`;
+const API_URL = `${SERVER_URL}/api`;
 
 const GLOBALS = {
     'process.env': {
-        'NODE_ENV': JSON.stringify(NODE_ENV)
-    }
-    // 'API_URL' : JSON.stringify(API_URL),
-    // 'FULL_API_URL' : JSON.stringify(FULL_API_URL),
+        'NODE_ENV': JSON.stringify(NODE_ENV),
+        'SERVER_URL' : JSON.stringify(SERVER_URL),
+        'API_URL' : JSON.stringify(API_URL)
+    },
     // __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'true'))
 };
 
@@ -28,7 +32,9 @@ var config = {
     mode: NODE_ENV,
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.ProvidePlugin({}),
+        new webpack.ProvidePlugin({
+            'axios': 'axios'
+        }),
         new webpack.DefinePlugin(GLOBALS),
         new HtmlWebPackPlugin({
             template: "./src/index.html",
@@ -139,14 +145,15 @@ var config = {
 }
 
 if (NODE_ENV !== "production") {
-    if (process.env.FROM_NODE) {
+    console.log(process.env)
+    // if (process.env.FROM_NODE) {
         config.entry.push('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000')
         config.plugins.push(new OpenBrowserPlugin({
             url: `http://localhost:${_PORT}`
         }))
         config.plugins.push(new webpack.HotModuleReplacementPlugin())
         config.plugins.push(new webpack.NoEmitOnErrorsPlugin())
-    }
+    // }
     config.entry.push('react-hot-loader/patch')
 }
 

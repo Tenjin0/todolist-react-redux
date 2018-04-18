@@ -11,9 +11,10 @@ const dist = path.resolve(__dirname, 'dist');
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const _PORT = process.env.REACT_PORT || 3030
+const _API_PORT = process.env.API_PORT || 3000
 const _API_HOST = process.env.API_HOST || 'localhost';
-const SERVER_URL = `http://${_API_HOST}:${_PORT}`;
-const API_URL = `${SERVER_URL}/api`;
+const SERVER_URL = `http://${_API_HOST}:${_API_PORT}`;
+const API_URL = `${SERVER_URL}/api/v1`;
 
 const GLOBALS = {
     'process.env': {
@@ -33,7 +34,7 @@ var config = {
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.ProvidePlugin({
-            'axios': 'axios'
+            // 'axios': 'axios'
         }),
         new webpack.DefinePlugin(GLOBALS),
         new HtmlWebPackPlugin({
@@ -145,15 +146,15 @@ var config = {
 }
 
 if (NODE_ENV !== "production") {
-    console.log(process.env)
-    // if (process.env.FROM_NODE) {
+    console.log(process.env.FROM_NODE)
+    if (process.env.FROM_NODE) {
         config.entry.push('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000')
         config.plugins.push(new OpenBrowserPlugin({
             url: `http://localhost:${_PORT}`
         }))
         config.plugins.push(new webpack.HotModuleReplacementPlugin())
         config.plugins.push(new webpack.NoEmitOnErrorsPlugin())
-    // }
+    }
     config.entry.push('react-hot-loader/patch')
 }
 

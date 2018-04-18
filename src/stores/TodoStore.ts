@@ -74,6 +74,12 @@ class TodoStore {
         this.inform()
 
     }
+    
+    setTodos = (todos : iTodo[]) => {
+        this.todos = todos
+        this.inform()
+    }
+
 
     subscribe(cb: Function) {
         this.cb.push(cb)

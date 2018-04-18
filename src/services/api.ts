@@ -1,20 +1,29 @@
+import axios from 'axios';
+import {iTodo} from '../interfaces';
+
 export default class Api {
     
     constructor() {
     }
 
-    get(endpoint : string, data : any) {
-        return this.send('GET', endpoint, data)
+    async get(endpoint : string, data?: any) : Promise<iTodo[]> {
+        if (!data) {
+            data = {}
+        }
+        return await this.send('GET', endpoint, data)
     }
 
-    send(method: string, endpoint: string , data: any) {
+    async send(method: string, endpoint: string , data: any) : Promise<iTodo[]>{
         let opts = {
             method: method,
-            // url: `${API_URL}/${endpoint}`
+            url: `${process.env.API_URL}/${endpoint}`
         }
         
         if(data) {
-            
+            return await axios(opts).then((response) => {
+                return response.data.data
+            })
         }
+        return Promise.resolve([])
     }
 }

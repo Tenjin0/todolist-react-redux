@@ -1,3 +1,4 @@
+process.env.FROM_NODE = true; // needed before webpackConfig
 const express = require('express');
 const webpack = require('webpack');
 const webpackconfig = require('./webpack.config');
@@ -6,14 +7,13 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 
 const env = process.env.NODE_ENV || 'development'
 const _PORT = process.env.REACT_PORT || 3030
-process.env.FROM_NODE = true;
 
 const app = express();
 app.use(express.static('dist'));
 
 const webpackCompiler = webpack(webpackconfig);
-
-app.use(webpackMiddleware(webpackCompiler,{}));
+const webpackDevMiddlewareInstance = webpackMiddleware(webpackCompiler,{})
+app.use(webpackDevMiddlewareInstance);
 
 if (env === 'development') {
     app.use( webpackHotMiddleware(webpackCompiler));
@@ -30,16 +30,21 @@ process.on('SIGTERM', function onSigterm () {
   shutdown()
 })
 
+process.on('SIGINT', function() {
+  console.info('Got SIGINT. Graceful shutdown start', new Date().toISOString())
+  shutdown();
+});
 function shutdown() {
   server.close(function onServerClosed (err) {
     if (err) {
       console.error(err)
       process.exit(1)
     }
-
+    webpackDevMiddlewareInstance.close(() => {
+      process.exit(0)
+    })
     // closeMyResources(function onResourcesClosed (err) {
       // error handling
-      process.exit()
     // })
   })
 }

@@ -6,6 +6,7 @@ import { iTodo } from '../../interfaces'
 import { eFilter } from '../../enum'
 import FilterTodo from './Filter'
 import HeaderTodo from './Header'
+import Api from '../../services/api'
 
 import './todolist.scss'
 
@@ -34,6 +35,7 @@ export default class TodoList extends React.Component<AppProps,
     AppState> {
 
     private store: TodoStore
+    private api: Api
     // private addStore : (title : string) => void = this .store .addTodo
     // .bind(this)
 
@@ -47,6 +49,8 @@ export default class TodoList extends React.Component<AppProps,
         }
 
         window.store = this.state
+        
+        this.api = new Api()
 
         this.store.subscribe(() => {
             this.setState({ ...this.state, todos: this.store.todos, newTodo: this.store.newTodo })
@@ -62,6 +66,11 @@ export default class TodoList extends React.Component<AppProps,
             ...this.state,
             currentFilter: filterOption
         })
+    }
+
+    async componentDidMount() {
+        const result = await this.api.get("todos");
+        this.store.setTodos(result)
     }
 
     render() {

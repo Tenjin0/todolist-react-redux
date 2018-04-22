@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { render } from 'react-dom'
+import { Provider } from "react-redux";
+
+import TodoStore from './TodoStore'
 import TodoList from './components/Todo/index'
-import {} from './constants/global'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 // import 'font-awesome/css/font-awesome.min.css';
 
@@ -14,7 +16,9 @@ import * as axios from 'axios';
 window.axios = axios;
 
 render(
-    <TodoList />,
+    <Provider store={TodoStore}>
+        <TodoList />
+    </Provider>,
     document.getElementById('root') as Element
 )
 

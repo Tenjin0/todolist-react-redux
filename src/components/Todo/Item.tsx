@@ -1,12 +1,12 @@
 import * as React from 'react'
-import {iTodo, StoreState} from '../../interfaces'
+import {iTodo, StoreState} from '../../constants/interfaces'
 import { connect } from 'react-redux';
-import { addTodo, deleteTodo } from "../../TodoActions";
+import { addTodo, deleteTodo, toggleTodo } from "../../TodoActions";
 import { Dispatch, bindActionCreators } from "redux";
 
 export interface ItemProps {
     todo : iTodo,
-    // toggleTodo : (id : number) => void,
+    toggleTodo : (id : number) => void,
     deleteTodo : (id: number) => void
 }
 
@@ -14,11 +14,12 @@ export interface ItemState {
 
 }
 
-
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         deleteTodo :
-            (id: number) => (dispatch(deleteTodo(id)))
+            (id: number) => (dispatch(deleteTodo(id))),
+        toggleTodo :
+            (id: number) => (dispatch(toggleTodo(id)))
     }
 };
 
@@ -36,14 +37,12 @@ class Item extends React.Component<ItemProps, ItemState> {
 
     handleClickToggle = (e : React.MouseEvent<HTMLSpanElement>) : void => {
         if (e.currentTarget.dataset.id) {
-            // this.props.toggleTodo(parseInt(e.currentTarget.dataset.id))
+            this.props.toggleTodo(parseInt(e.currentTarget.dataset.id))
         }
     }
     
     handleClickDelete = (e: React.MouseEvent<HTMLSpanElement>) : void=> {
         e.stopPropagation()
-        console.log('i click on delete')
-        console.log(this.props)
         this.props.deleteTodo(this.props.todo.id)
     
     }
@@ -51,7 +50,7 @@ class Item extends React.Component<ItemProps, ItemState> {
     render() {
         return(
             <li 
-                // onClick={this.handleClickToggle}
+                onClick={this.handleClickToggle}
                 className={this.props.todo.completed ?'completed': ''}
                 data-id={this.props.todo.id}
             >

@@ -2,8 +2,8 @@ import * as React from "react";
 import ListTodo from './List'
 import AddTodo from './Add'
 import { todoStore, TodoStore } from '../../stores/TodoStore'
-import { iTodo } from '../../interfaces'
-import { eFilter } from '../../enum'
+import { iTodo } from '../../constants/interfaces'
+import { eFilter } from '../../constants/enum'
 import FilterTodo from './Filter'
 import HeaderTodo from './Header'
 import Api from '../../services/api'
@@ -81,12 +81,8 @@ export default class TodoList extends React.Component<AppProps,
         return <div>
             {/* <HeaderTodo clearAll={this.store.clearAll} completeAll={this.store.completeAll} clearCompleted={this.store.clearCompleted} /> */}
             <AddTodo />
-            <ListTodo
-                // todos={todosFiltered}
-                // toggleTodo={this.store.toggleTodo}
-                // deleteTodo={this.store.deleteTodo} 
-            />
-            {/* <FilterTodo filterCallback={this.filterCallback} /> */}
+            <ListTodo />
+            <FilterTodo />
         </div>
     }
 }

@@ -5,7 +5,8 @@ export interface iTodo {
 }
 
 export interface StoreState {
-    todos : iTodo[]
+    todos : iTodo[],
+    filter: string
 }
 
 

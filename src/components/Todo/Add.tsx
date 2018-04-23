@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from 'react-redux';
 import { addTodo } from "../../TodoActions";
-import { iTodo, StoreState } from '../../interfaces'
+import { iTodo, StoreState } from '../../constants/interfaces'
 import { Dispatch, bindActionCreators } from "redux";
 // import { } from 'reactstrap'
 
@@ -14,7 +14,7 @@ interface AddState {
     newTodo: string
 }
 
-//@ts-ignore
+// @ts-ignore
 const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
     return {
         addTodo:

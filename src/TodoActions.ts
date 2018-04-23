@@ -1,5 +1,5 @@
-import {iTodo} from './interfaces'
-import {IAddTodoAction, IAddDeleteAction, ActionTypeKeys} from './constants/action-types'
+import {iTodo} from './constants/interfaces'
+import {IAddTodoAction, IDeleteTodoAction,IToggleTodoAction, ActionTypeKeys} from './constants/action-types'
 import { ActionCreator } from 'redux';
 
 export const addTodo: ActionCreator<IAddTodoAction> = (title: string) => ({
@@ -7,8 +7,15 @@ export const addTodo: ActionCreator<IAddTodoAction> = (title: string) => ({
   payload: { title : title}
 });
 
-export const deleteTodo: ActionCreator<IAddDeleteAction> = (id : number) => ({
+export const deleteTodo: ActionCreator<IDeleteTodoAction> = (id : number) => ({
   type: ActionTypeKeys.DELETE_TODO,
+  payload: {
+    id
+  }
+});
+
+export const toggleTodo: ActionCreator<IToggleTodoAction> = (id : number) => ({
+  type: ActionTypeKeys.TOGGLE_TODO,
   payload: {
     id
   }

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {iTodo} from '../interfaces';
-
+import {iTodo} from '../constants/interfaces';
+   
 export default class Api {
     
     constructor() {

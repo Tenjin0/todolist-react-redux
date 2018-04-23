@@ -1,4 +1,4 @@
-import { iTodo } from "../interfaces"
+import { iTodo } from "../constants/interfaces"
 
 class TodoStore {
 

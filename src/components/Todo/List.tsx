@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {iTodo, StoreState} from '../../interfaces'
+import {iTodo, StoreState} from '../../constants/interfaces'
 import ItemTodo from './Item'
 import {Dispatch, bindActionCreators} from "redux";
 import {connect } from 'react-redux';
 
 export interface ListProps {
     todos : iTodo[],
-    // toggleTodo : (id : number) => void,
-    // deleteTodo : (id : number) => void
 }
 
 function mapStateToProps (state : StoreState) {
@@ -35,8 +33,6 @@ class List extends React.Component < ListProps, {} > {
                         .props
                         .todos
                         .map(todo => <ItemTodo
-                            // toggleTodo={this.props.toggleTodo}
-                            // deleteTodo={this.props.deleteTodo}
                             key={'item-' + todo.id}
                             todo={todo}/>)}
                 </ul>

@@ -11,7 +11,6 @@ export interface ListProps {
 }
 
 function mapStateToProps (state : StoreState) {
-    console.log('mapStateToProps')
     return {
         todos : state.todos
     }
@@ -28,6 +27,7 @@ class List extends React.Component < ListProps, {} > {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div>
                 <ul>

@@ -1,31 +1,36 @@
 import * as React from "react";
-import {connect } from 'react-redux';
-import {addTodo} from "../../TodoActions";
-import {iTodo, StoreState} from '../../interfaces'
-import {Dispatch, bindActionCreators} from "redux";
+import { connect } from 'react-redux';
+import { addTodo } from "../../TodoActions";
+import { iTodo, StoreState } from '../../interfaces'
+import { Dispatch, bindActionCreators } from "redux";
 // import { } from 'reactstrap'
 
 interface AddProps {
-    addTodo : (newTodo: iTodo) => void,
+    addTodo: (newTitle: string) => void,
 }
 
 interface AddState {
-    buttonIsVisible : boolean,
-    newTodo : string
+    buttonIsVisible: boolean,
+    newTodo: string
 }
 
-const mapDispatchToProps = (dispatch : Dispatch) => {     return { addTodo:
-(newTodo : iTodo) => (dispatch(addTodo(newTodo)))     } };
+//@ts-ignore
+const mapDispatchToProps = (dispatch: Dispatch, ownProps) => {
+    return {
+        addTodo:
+            (newTodo: iTodo) => (dispatch(addTodo(newTodo))),
+        todo: ownProps.todo
+    }
+};
 
-function mapStateToProps (state : StoreState) {
-    console.log('mapStateToProps')
-    return {}
-}
+// function mapStateToProps(state: StoreState) {
+//     return {}
+// }
 
-class Add extends React.Component < AddProps,
-AddState > {
+class Add extends React.Component<AddProps,
+    AddState> {
 
-    constructor(props : AddProps) {
+    constructor(props: AddProps) {
         super(props)
         this.state = {
             buttonIsVisible: false,
@@ -33,19 +38,23 @@ AddState > {
         }
     }
 
-    handleSubmit = (event : React.FormEvent < EventTarget >) : void => {
+    handleSubmit = (event: React.FormEvent<EventTarget>): void => {
         event.preventDefault()
         this
             .props
-            .addTodo({ id : 1, title: "toto", completed : false})
+            .addTodo(this.state.newTodo);
     }
 
-    handleFocus = (event : React.FocusEvent < HTMLInputElement >) : void => {
-        this.setState({buttonIsVisible: true})
+    handleFocus = (event: React.FocusEvent<HTMLInputElement>): void => {
+        this.setState({ buttonIsVisible: true })
     }
 
-    handleBlur = (event : React.FocusEvent < HTMLInputElement >) : void => {
-        this.setState({buttonIsVisible: true})
+    handleBlur = (event: React.FocusEvent<HTMLInputElement>): void => {
+        this.setState({ buttonIsVisible: true })
+    }
+
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        this.setState({ ...this.state, newTodo: event.currentTarget.value as string})
     }
 
     componentDidMount() {
@@ -59,11 +68,12 @@ AddState > {
                     type="text"
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
-                    autoFocus/> {this.state.buttonIsVisible && <button>Add</button>}
+                    onChange={this.handleChange}
+                    autoFocus /> {this.state.buttonIsVisible && <button>Add</button>}
             </form>
         </div>
     }
 }
 
 //@ts-ignore
-export default connect(mapStateToProps, mapDispatchToProps)(Add);
+export default connect(null, mapDispatchToProps)(Add);

@@ -30,7 +30,7 @@ export default class TodoList extends React.Component<{},
 
     render() {
         return <div>
-            {/* <HeaderTodo clearAll={this.store.clearAll} completeAll={this.store.completeAll} clearCompleted={this.store.clearCompleted} /> */}
+            <HeaderTodo />
             <AddTodo />
             <ListTodo />
             <FilterTodo />

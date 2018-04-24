@@ -1,9 +1,9 @@
 import * as React from "react";
 
 export interface IHeaderProps {
-    clearCompleted: () => void;
-    clearAll: () => void;
-    completeAll: () => void;
+    // clearCompleted: () => void;
+    // clearAll: () => void;
+    // completeAll: () => void;
 }
 
 export default class Header extends React.Component<IHeaderProps, {}> {
@@ -12,14 +12,14 @@ export default class Header extends React.Component<IHeaderProps, {}> {
     }
 
     handleCompleteAll = (e: React.MouseEvent<HTMLLIElement>): void => {
-        this.props.completeAll();
-    };
+        // this.props.completeAll();
+    }
     handleClearAll = (e: React.MouseEvent<HTMLLIElement>): void => {
-        this.props.clearAll();
-    };
+        // this.props.clearAll();
+    }
     handleClearCompleted = (e: React.MouseEvent<HTMLLIElement>): void => {
-        this.props.clearCompleted();
-    };
+        // this.props.clearCompleted();
+    }
 
     render() {
         return (

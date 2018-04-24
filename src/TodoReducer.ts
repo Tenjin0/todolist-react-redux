@@ -62,6 +62,11 @@ export const todoReducer: Reducer<IStoreState> = (
                               }
                 )
             };
+        case ActionTypeKeys.CHANGE_FILTER:
+            return {
+                ...state,
+                filter: action.payload.filter
+            };
         default:
             return state;
     }

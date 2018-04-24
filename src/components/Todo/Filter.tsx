@@ -1,21 +1,22 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import { eFilter } from "../../constants/enum";
 import { Dispatch, bindActionCreators } from "redux";
 import { ITodo, IStoreState } from "../../constants/interfaces";
 import { changeFilter } from "../../TodoActions";
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    changeFilter: (filter: eFilter) => dispatch(changeFilter(filter))
-  };
+    return {
+        changeFilter: (filter: eFilter) => dispatch(changeFilter(filter))
+    };
 };
 
 function mapStateToProps(state: IStoreState) {
-  return {};
+    return {};
 }
 
 export interface IFilterProps {
-  changeFilter: (filter: eFilter) => void;
+    changeFilter: (filter: eFilter) => void;
 }
 class Filter extends React.Component<IFilterProps, {}> {
     constructor(props: IFilterProps) {
@@ -31,9 +32,7 @@ class Filter extends React.Component<IFilterProps, {}> {
 
     render() {
         const filterkeys = Object.keys(eFilter).filter((option) => {
-            // @ts-ignore
-            // tslint:disable-next-line:radix
-            return Number.isNaN(parseInt(option));
+            return Number.isNaN(parseInt(option, 10));
         });
         return (
             <ul className="inline">

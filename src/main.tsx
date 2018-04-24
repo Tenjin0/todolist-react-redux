@@ -11,13 +11,14 @@ declare global {
     // tslint:disable-next-line:interface-name
     interface Window {
         axios: any;
+        store: any;
     }
 }
 
 import * as axios from "axios";
 
 window.axios = axios;
-
+window.store = TodoStore;
 render(
     <Provider store={TodoStore}>
         <TodoList />

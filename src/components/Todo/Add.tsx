@@ -55,10 +55,6 @@ class Add extends React.Component<IAddProps, IAddState> {
         });
     }
 
-    componentDidMount() {
-        console.log(this.props);
-    }
-
     render() {
         return (
             <div>

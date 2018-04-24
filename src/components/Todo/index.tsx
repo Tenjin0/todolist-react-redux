@@ -1,65 +1,27 @@
 import * as React from "react";
-import ListTodo from './List'
-import AddTodo from './Add'
-import { todoStore, TodoStore } from '../../stores/TodoStore'
-import { iTodo } from '../../constants/interfaces'
-import { eFilter } from '../../constants/enum'
-import FilterTodo from './Filter'
-import HeaderTodo from './Header'
-import Api from '../../services/api'
+import ListTodo from "./List";
+import AddTodo from "./Add";
+import { todoStore, TodoStore } from "../../stores/TodoStore";
+import { ITodo } from "../../constants/interfaces";
+import { eFilter } from "../../constants/enum";
+import FilterTodo from "./Filter";
+import HeaderTodo from "./Header";
+import Api from "../../services/api";
 
-import './todolist.scss'
+import "./todolist.scss";
 
 const Filters = {
-    [eFilter.all]: (todo: iTodo) => true,
-    [eFilter.active]: (todo: iTodo) => !todo.completed,
-    [eFilter.completed]: (todo: iTodo) => todo.completed
-}
+    [eFilter.all]: (todo: ITodo) => true,
+    [eFilter.active]: (todo: ITodo) => !todo.completed,
+    [eFilter.completed]: (todo: ITodo) => todo.completed
+};
 
-export interface AppProps {
-    // compiler?: string, framework?: string;
-}
+export default class TodoList extends React.Component<{},
+    {}> {
 
-export interface AppState {
-    // todos: iTodo[],
-    // newTodo: string,
-    // currentFilter: eFilter
-}
-
-// interface Window {
-//     store: any;
-// }
-// declare var window: Window;
-
-export default class TodoList extends React.Component<AppProps,
-    AppState> {
-
-    // private store: TodoStore
-    // private api: Api
-    // private addStore : (title : string) => void = this .store .addTodo
-    // .bind(this)
-
-    constructor(props: AppProps) {
-        super(props)
-        // this.store = todoStore
-        // this.state = {
-        //     todos: this.store.todos,
-        //     newTodo: this.store.newTodo,
-        //     currentFilter: eFilter.all
-        // }
-
-        // window.store = this.state
-        
-        // this.api = new Api()
-
-        // this.store.subscribe(() => {
-        //     this.setState({ ...this.state, todos: this.store.todos, newTodo: this.store.newTodo })
-        // })
+    constructor(props: {}) {
+        super(props);
     }
-
-    // updateNewTodo = (e: React.FormEvent<HTMLInputElement>): void => {
-    //     this.store.updateNewTodo(e.currentTarget.value as string)
-    // }
 
     // filterCallback = (filterOption: eFilter): void => {
     //     this.setState({
@@ -83,6 +45,6 @@ export default class TodoList extends React.Component<AppProps,
             <AddTodo />
             <ListTodo />
             <FilterTodo />
-        </div>
+        </div>;
     }
 }

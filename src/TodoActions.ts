@@ -1,23 +1,38 @@
-import {iTodo} from './constants/interfaces'
-import {IAddTodoAction, IDeleteTodoAction,IToggleTodoAction, ActionTypeKeys} from './constants/action-types'
-import { ActionCreator } from 'redux';
+import { ActionCreator } from "redux";
+import {
+    IAddTodoAction,
+    IDeleteTodoAction,
+    IToggleTodoAction,
+    IChangeFilterAction,
+    ActionTypeKeys
+} from "./constants/action-types";
+import { eFilter } from "./constants/enum";
 
 export const addTodo: ActionCreator<IAddTodoAction> = (title: string) => ({
-  type: ActionTypeKeys.ADD_TODO,
-  payload: { title : title}
+    type: ActionTypeKeys.ADD_TODO,
+    payload: { title }
 });
 
-export const deleteTodo: ActionCreator<IDeleteTodoAction> = (id : number) => ({
-  type: ActionTypeKeys.DELETE_TODO,
-  payload: {
-    id
-  }
+export const deleteTodo: ActionCreator<IDeleteTodoAction> = (id: number) => ({
+    type: ActionTypeKeys.DELETE_TODO,
+    payload: {
+        id
+    }
 });
 
-export const toggleTodo: ActionCreator<IToggleTodoAction> = (id : number) => ({
-  type: ActionTypeKeys.TOGGLE_TODO,
+export const toggleTodo: ActionCreator<IToggleTodoAction> = (id: number) => ({
+    type: ActionTypeKeys.TOGGLE_TODO,
+    payload: {
+        id
+    }
+});
+
+export const changeFilter: ActionCreator<IChangeFilterAction> = (
+    filter: eFilter
+) => ({
+  type: ActionTypeKeys.CHANGE_FILTER,
   payload: {
-    id
+    filter
   }
 });
 

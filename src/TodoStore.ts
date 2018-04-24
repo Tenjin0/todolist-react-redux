@@ -1,8 +1,6 @@
-import {createStore} from "redux";
-import {todoReducer, initialState} from "./TodoReducer";
-import {StoreState} from './constants/interfaces'
-import {IAddTodoAction} from './constants/action-types'
+import { createStore } from "redux";
+import { initialState, todoReducer } from "./TodoReducer";
 
 const TodoStore = createStore(todoReducer, initialState);
 
-export default TodoStore
+export default TodoStore;

@@ -1,11 +1,17 @@
-import { StoreState } from './constants/interfaces'
-import { Reducer } from 'redux';
-import { TodosAction, IAddTodoAction, ActionTypeKeys } from './constants/action-types'
+import { Reducer } from "redux";
+import {
+    ActionTypeKeys,
+    IAddTodoAction,
+    TodosAction
+} from "./constants/action-types";
+import { IStoreState } from "./constants/interfaces";
 
 let i = 0;
+
 function increment(): number {
-    return i++
+    return i++;
 }
+
 export const initialState = {
     todos: [
         {
@@ -14,32 +20,49 @@ export const initialState = {
             completed: false
         }
     ],
-    filter : ""
+    filter: ""
 };
 
-export const todoReducer: Reducer<StoreState> = (state: StoreState = initialState, action) => {
-    console.log('reducer', action.type)
+export const todoReducer: Reducer<IStoreState> = (
+    state: IStoreState = initialState,
+    action
+) => {
+    console.log("reducer", action.type);
     switch ((action as TodosAction).type) {
         case ActionTypeKeys.ADD_TODO:
             return {
                 ...state,
                 todos: [
-                    {id: increment(), title: action.payload.title, completed: false}, ...state.todos
+                    {
+                        id: increment(),
+                        title: action.payload.title,
+                        completed: false
+                    },
+                    ...state.todos
                 ]
-            }
+            };
         case ActionTypeKeys.DELETE_TODO:
-            const newTodos = state.todos.filter(todo => todo.id !== action.payload.id)
+            const newTodos = state.todos.filter(
+                (todo) => todo.id !== action.payload.id
+            );
             return {
-                ...state, todos: newTodos
-            }
+                ...state,
+                todos: newTodos
+            };
         case ActionTypeKeys.TOGGLE_TODO:
-            return { ...state, todos: state.todos.map(todo => 
-                todo.id != action.payload.id ?
-                todo :
-                { ...todo, completed: !todo.completed }
-            )}
+            return {
+                ...state,
+                todos: state.todos.map(
+                    (todo) =>
+                        todo.id !== action.payload.id
+                            ? todo
+                            : {
+                                  ...todo,
+                                  completed: !todo.completed
+                              }
+                )
+            };
         default:
-    return state;
+            return state;
     }
-
-}
+};

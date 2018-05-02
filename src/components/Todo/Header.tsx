@@ -1,13 +1,13 @@
 import * as React from "react";
 
-export interface IHeaderProps {
+// export interface IHeaderProps {
     // clearCompleted: () => void;
     // clearAll: () => void;
     // completeAll: () => void;
-}
+// }
 
-export default class Header extends React.Component<IHeaderProps, {}> {
-    constructor(props: IHeaderProps) {
+export default class Header extends React.Component<{}, {}> {
+    constructor(props: {}) {
         super(props);
     }
 

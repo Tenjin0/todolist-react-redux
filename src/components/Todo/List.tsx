@@ -34,15 +34,17 @@ class List extends React.Component<IListProps, {}> {
 
     render() {
         // @ts-ignore
-        const todosFiltered = this.props.todos.filter(
-            Filters[this.props.filter]
-        );
+        // const todosFiltered = this.props.todos.filter(
+        //     Filters[this.props.filter]
+        // );
         return (
             <div>
                 <ul>
-                    {todosFiltered.map((todo) => (
+                    {
+                        this.props.todos.map((todo) => (
                         <ItemTodo key={"item-" + todo.id} todo={todo} />
-                    ))}
+                    ))
+                    }
                 </ul>
             </div>
         );

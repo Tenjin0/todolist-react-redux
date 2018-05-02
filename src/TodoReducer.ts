@@ -4,6 +4,7 @@ import {
     IAddTodoAction,
     TodosAction
 } from "./constants/action-types";
+import { eFilter } from "./constants/enum";
 import { IStoreState } from "./constants/interfaces";
 
 let i = 0;
@@ -20,10 +21,12 @@ export const initialState = {
             completed: false
         }
     ],
-    filter: ""
+    filter: eFilter.all
 };
 
+// @ts-ignore
 export const todoReducer: Reducer<IStoreState> = (
+    // @ts-ignore
     state: IStoreState = initialState,
     action
 ) => {

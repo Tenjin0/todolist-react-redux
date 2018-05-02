@@ -1,3 +1,5 @@
+import { eFilter } from "./enum";
+
 export interface ITodo {
   id: number;
   title: string;
@@ -6,7 +8,7 @@ export interface ITodo {
 
 export interface IStoreState {
   todos: ITodo[];
-  filter: string;
+  filter: eFilter;
 }
 
 // export interface IncrementEnthusiasm {

@@ -4,6 +4,9 @@ import {
     IDeleteTodoAction,
     IToggleTodoAction,
     IChangeFilterAction,
+    IClearAllAction,
+    IClearCompleted,
+    ICompleteAllAction,
     ActionTypeKeys
 } from "./constants/action-types";
 import { eFilter } from "./constants/enum";
@@ -30,10 +33,24 @@ export const toggleTodo: ActionCreator<IToggleTodoAction> = (id: number) => ({
 export const changeFilter: ActionCreator<IChangeFilterAction> = (
     filter: eFilter
 ) => ({
-  type: ActionTypeKeys.CHANGE_FILTER,
-  payload: {
-    filter
-  }
+    type: ActionTypeKeys.CHANGE_FILTER,
+    payload: {
+        filter
+    }
 });
 
+export const completeAll: ActionCreator<ICompleteAllAction> = () => ({
+    type: ActionTypeKeys.COMPLETE_ALL
+
+});
+
+export const ClearAll: ActionCreator<IClearAllAction> = () => ({
+    type: ActionTypeKeys.CLEAR_ALL
+
+});
+
+export const clearCompleted: ActionCreator<IClearCompleted> = () => ({
+    type: ActionTypeKeys.CLEAR_COMPLETED
+
+});
 // export const addTodo = (newTodo : iTodo) : IAddTodoAction => ({type: ActionTypeKeys.ADD_TODO, payload: newTodo})

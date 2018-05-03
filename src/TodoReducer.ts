@@ -70,6 +70,21 @@ export const todoReducer: Reducer<IStoreState> = (
                 ...state,
                 filter: action.payload.filter
             };
+        case ActionTypeKeys.CLEAR_COMPLETED:
+            return {
+                ...state,
+                todos: state.todos.filter((todo) => !todo.completed)
+            };
+        case ActionTypeKeys.CLEAR_ALL:
+            return {
+                ...state,
+                todos: []
+            };
+        case ActionTypeKeys.COMPLETE_ALL:
+            return {
+                ...state,
+                todos: state.todos.map((todo) => ({ ...todo, completed: true }))
+            };
         default:
             return state;
     }
